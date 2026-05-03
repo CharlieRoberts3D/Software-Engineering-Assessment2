@@ -1,6 +1,7 @@
 """ main.py
 
-Starts the Veterinary Practice application and contains the UserInterface class.
+Starts the Veterinary Practice application.
+Contains the UserInterface class.
 The UI menu is displayed to the user until they choose to exit the application.
 
 """
@@ -8,22 +9,28 @@ The UI menu is displayed to the user until they choose to exit the application.
 from appointment import Appointment
 from veterinary_practice import veterinary_practice
 
+
 class UserInterface:
     """
-    Displays the menu options to the user and allow the user to interact with the various options.
+    Displays the menu options to the user.
+    Allows the user to interact with the various options.
     """
 
     def __init__(self, vp):
         """
         UserInterface's __init__
-        
+
         :param self
-        :param vp (veterinary_practice): The veterinary_practice this object is the user interface for.
+        :param vp (veterinary_practice):
+        The veterinary_practice this object is the user interface for.
         """
         self.vp = vp
 
     def menu(self):
-        """ Displays the menu options to the user and allows them to select an option """
+        """
+        Displays the menu options to the user.
+        Allows them to select an option.
+        """
 
         # display the menu
         print("Select one of the following options:")
@@ -38,7 +45,7 @@ class UserInterface:
         # select an option
         print("Enter the number of the option you wish to select:")
         option = int(input())
-        
+
         # call the method for the selected option
         match option:
             case 1:
@@ -60,7 +67,7 @@ class UserInterface:
             case _:
                 print("Unknown option selected")
         return True
-    
+
     def register_pet(self):
         """ Ask the user for an owner's and a pet's details """
         print("Enter owner's name:")
@@ -77,7 +84,7 @@ class UserInterface:
         if not self.vp.has_owners():
             print("Register a pet first!")
             return
-        
+
         # enter owner's and pet's name to find a pet
         pet = self._enter_details_to_find_existing_pet()
 
@@ -85,25 +92,26 @@ class UserInterface:
         print("Enter appointment date and time (any string is accepted):")
         time = input()
 
-        #--------
+        # --------
         # modify this line of code to try out your decorator pattern.
         appointment = Appointment(pet, time)
-        #---------
+        # ---------'
 
         # add the appointment to the vet's list
         id = self.vp.create_appointment(appointment)
         print(f"The appointment ID is {id}")
- 
-    
+
     def attend_appointment(self):
         """ Ask user for appointment ID and update the appointment """
         print("Enter appointment ID:")
         appointment_id = int(input())
         notes = self.vp.attend_appointment(appointment_id)
         print(f"Appointment notes: {notes}")
-    
+
     def stock_medication(self):
-        """ Allows user to enter a new or existing medication to add stock to. """
+        """
+        Allows user to enter a new or existing medication to add stock to.
+        """
         print("Enter medication name:")
         medication_name = input()
         print("Enter amount of medication that has been delivered:")
@@ -111,13 +119,17 @@ class UserInterface:
         self.vp.stock_medication(medication_name, amount)
 
     def create_prescription(self):
-        """ if their are owners and medications, the user can enter the details for a new prescription """
-        
+        """
+        If their are owners and medications,
+        the user can enter the details for a new prescription.
+        """
+
         if not self.vp.has_owners() or not self.vp.has_medications():
-            # the system must have at least one owner and at least one medication to create a prescription
+            # the system must have at least:
+            # one owner and one medication to create a prescription.
             print("Register a pet and stock medications first!")
-            return       
-        
+            return
+
         # enter owner's and pet's name to find a pet
         p = self._enter_details_to_find_existing_pet()
 
@@ -129,30 +141,35 @@ class UserInterface:
 
         print("Enter dosage (amount to be given):")
         d = int(input())
-        
-        id = self.vp.create_prescription(p, m, d)
-        print(f"The prescription ID is {id}")   
 
-    
+        id = self.vp.create_prescription(p, m, d)
+        print(f"The prescription ID is {id}")
+
     def prepare_prescription(self):
-        """ Ask the user for a prescription ID and prepares the prescription for collection """
+        """
+        Ask the user for a prescription ID
+        Prepares the prescription for collection
+        """
         print("Enter prescription ID:")
         prescription_id = int(input())
         output = self.vp.prepare_prescription_for_collection(prescription_id)
         print(output)
 
-    def collect_prescription(self):   
-        """ Ask the user for a prescription ID and sets the prescription status to collected """     
+    def collect_prescription(self):
+        """
+        Ask the user for a prescription ID
+        Sets the prescription status to collected
+        """
         print("Enter prescription ID:")
         prescription_id = int(input())
         output = self.vp.collect_prescription(prescription_id)
         print(output)
 
-    #----
+    # ----
     # private methods:
 
     def _enter_existing_owner(self):
-        """ enter owner's name until an existing owner is found 
+        """ enter owner's name until an existing owner is found
             :return Owner
         """
         owner = None
@@ -161,22 +178,24 @@ class UserInterface:
             owner_name = input()
             owner = self.vp.find_owner(owner_name)
         return owner
-    
+
     def _enter_details_to_find_existing_pet(self):
-        """ find owner and then enter owner's name until an existing owner is found 
+        """
+        find owner and then enter owner's name until an existing owner is found
             :return Pet
         """
         owner = self._enter_existing_owner()
-        
+
         pet = None
         while not pet:
             print("Enter pet's name:")
             pet_name = input()
             pet = owner.find_pet(pet_name)
         return pet
-    
+
     # End of class
-#------------------------------
+# ------------------------------
+
 
 if __name__ == "__main__":
     ui = UserInterface(veterinary_practice())
@@ -185,4 +204,4 @@ if __name__ == "__main__":
         keep_going = ui.menu()
 
 # EOF
-#-----
+# -----
