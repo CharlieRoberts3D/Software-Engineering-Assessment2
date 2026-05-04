@@ -2,10 +2,12 @@
 Helper functions.
 """
 
+
 def find_by_name(name, items):
     """
-    Searches a list of items for a item with a name that matches the provided name.
-    
+    Searches a list of items for a item
+    with a name that matches the provided name.
+
     :param name (string): The name to search for.
     :param items (objects with object.name): The list of items to be searched.
 
@@ -15,5 +17,5 @@ def find_by_name(name, items):
 
     if len(item) > 0:
         return item[0]
-    
+
     return None
