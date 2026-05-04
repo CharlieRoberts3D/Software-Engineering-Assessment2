@@ -1,5 +1,6 @@
 from prescription import Prescription
 
+
 class Pet:
     def __init__(self, name, owner, species):
         self.name = name
@@ -12,9 +13,9 @@ class Pet:
 
     def create_prescription(self, medication, dosage):
         prescription = Prescription(self, medication, dosage)
-        self.prescriptions.append( prescription )
+        self.prescriptions.append(prescription)
         return prescription
-    
+
     def add_vaccination(self, vaccination):
         self.vaccinations.append(vaccination)
 
