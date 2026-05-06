@@ -2,6 +2,15 @@
 Contains the Prescription class and the PrescriptionStatus enum.
 """
 from enum import Enum
+from abc import ABC, abstractmethod
+
+#---------
+# Observers
+
+class Observer(ABC):
+    @abstractmethod
+    def update(self):
+        pass
 
 
 class PrescriptionStatus(Enum):
@@ -20,7 +29,7 @@ class PrescriptionStatus(Enum):
     collected = 4
 
 
-class Prescription():
+class Prescription(Observer):
     """
     When the prescription is created:
         If enough medication is in stock,
@@ -46,12 +55,13 @@ class Prescription():
         self.pet = pet
         self.medication = medication
         self.dosage = dosage
+        medication.attach(self)
 
         self._prepareOrWaitForStock()
 
     def _prepareOrWaitForStock(self):
         """
-        Checks if there is enough medication is stock for this prescription.
+        Checks if there is enough medication in stock for this prescription.
         :param self
         """
         if self.medication.has_enough_stock(self.dosage):
@@ -84,5 +94,17 @@ class Prescription():
             return True
         else:
             return False
+        
+    def update(self):
+        """
+        Checks if this prescription will need to be updated after any medication gets updated.
+        :param self
+        """
+        self._prepareOrWaitForStock()
+        
+
+        
+
+
 # EOF
 # ----
