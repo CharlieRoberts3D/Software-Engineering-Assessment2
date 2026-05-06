@@ -40,3 +40,12 @@ class DataTable(Subject):
 
     def get_values(self):
         return self._values
+    
+#---------
+# Observers
+
+class Observer(ABC):
+    @abstractmethod
+    def update(self):
+        pass
+
