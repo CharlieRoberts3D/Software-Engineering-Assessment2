@@ -52,7 +52,7 @@ class SurgeryDecorator(AppointmentDecorator):
         return self.decorated_appointment.get_pet()
 
     def get_notes(self):
-        print("Please state any notes from the surgery that was performedif there was one, if none leave blank: ")
+        print("Please state any notes from the surgery that was performed if there was one, if none leave blank: ")
         note = input()
         if (note != ""):
             return self.decorated_appointment.get_notes() + (f", surgery notes = {note}")
